@@ -1,6 +1,7 @@
 import 'package:date_field/date_field.dart';
-import 'package:finalmobileproject/databaseInteractions/AddProject.dart';
-import 'package:finalmobileproject/types/project.class.dart';
+import 'package:finalmobileproject/databaseInteractions/add_project.dart';
+import 'package:finalmobileproject/class/project.class.dart';
+import 'package:finalmobileproject/util/date_parser.dart';
 import 'package:flutter/material.dart';
 
 class Addprojectform extends StatefulWidget {
@@ -14,7 +15,7 @@ class _AddprojectformState extends State<Addprojectform> {
   final _projectNameController = TextEditingController();
   final _descriptionController = TextEditingController();
   DateTime? selectedStartDate;
-  DateTime? selectedEndDat;
+  DateTime? selectedEndDate;
   ProjectStatus? status = ProjectStatus.values.first;
 
   @override
@@ -49,6 +50,7 @@ class _AddprojectformState extends State<Addprojectform> {
                   labelText: 'Start Date',
                   border: OutlineInputBorder(),
                 ),
+                mode: DateTimeFieldPickerMode.date,
                 firstDate: DateTime.now().add(Duration(days: 0)),
                 initialPickerDateTime: DateTime.now().add(
                   const Duration(days: 20),
@@ -66,6 +68,7 @@ class _AddprojectformState extends State<Addprojectform> {
                       labelText: 'End Date',
                       border: OutlineInputBorder(),
                     ),
+                    mode: DateTimeFieldPickerMode.date,
                     firstDate:
                         selectedStartDate != null
                             ? selectedStartDate?.add(Duration(days: 1))
@@ -73,7 +76,7 @@ class _AddprojectformState extends State<Addprojectform> {
 
                     onChanged: (DateTime? value) {
                       setState(() {
-                        selectedEndDat = value;
+                        selectedEndDate = value;
                       });
                     },
                   )
@@ -81,45 +84,71 @@ class _AddprojectformState extends State<Addprojectform> {
               const SizedBox(height: 16),
               DropdownButton<ProjectStatus>(
                 value: status,
-                items: ProjectStatus.values
-                    .where((e) => e != ProjectStatus.cancelled && e != ProjectStatus.completed)
-                    .map((e) => DropdownMenuItem<ProjectStatus>(
-                          value: e,
-                          child: Text(e.toString().split('.').last),
-                        ))
-                    .toList(),
+                items:
+                    ProjectStatus.values
+                        .where(
+                          (e) =>
+                              e != ProjectStatus.cancelled &&
+                              e != ProjectStatus.completed,
+                        )
+                        .map(
+                          (e) => DropdownMenuItem<ProjectStatus>(
+                            value: e,
+                            child: Text(e.toString().split('.').last),
+                          ),
+                        )
+                        .toList(),
                 onChanged: (ProjectStatus? newValue) {
                   setState(() {
                     status = newValue;
                   });
                 },
               ),
-              
+
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
-                if (_projectNameController.text.isEmpty ||
-                    _descriptionController.text.isEmpty ||
-                    selectedStartDate == null ||
-                    selectedEndDat == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please fill all fields'),
-                    ),
-                  );
-                  return;
-                }
-                addProject(
-                  Project(
-                  id: '',
-                  name: _projectNameController.text,
-                  description: _descriptionController.text,
-                  startDate: selectedStartDate!,
-                  est: '1',
-                  endDate: selectedEndDat,
-                  status: status!,
-                ));
-                Navigator.pop(context);
+                onPressed: () async {
+               
+                  if (_projectNameController.text.isEmpty ||
+                      _descriptionController.text.isEmpty ||
+                      selectedStartDate == null ||
+                      selectedEndDate == null ||
+                      status == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please fill all fields')),
+                    );
+                    return;
+                  } else {
+                    String res = await addProject(
+                      Project(
+                        id: '',
+                        name: _projectNameController.text,
+                        description: _descriptionController.text,
+                        startDate: dateParser(
+                          selectedStartDate!,
+                        ),
+                        est: '0',
+                        endDate: dateParser(
+                          selectedStartDate!,
+                        ),
+                        status: status!,
+                      ),
+                    );
+                      if (!context.mounted) return; 
+                      if (res.contains("Error")) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text('Error: $res')));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Project added successfully'),
+                          ),
+                        );
+                      }
+                      Navigator.pop(context);
+                 
+                  }
                 },
                 child: const Text('Add Project'),
               ),

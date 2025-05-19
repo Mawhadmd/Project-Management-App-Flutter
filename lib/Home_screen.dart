@@ -1,7 +1,6 @@
-import 'package:finalmobileproject/NewProjectButton.dart';
-import 'package:finalmobileproject/Projectcard.dart';
-import 'package:finalmobileproject/ProjectsHolder.dart';
-import 'package:finalmobileproject/TopBar.dart';
+import 'package:finalmobileproject/project_adding_button.dart';
+import 'package:finalmobileproject/projects_holder.dart';
+import 'package:finalmobileproject/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,7 +9,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

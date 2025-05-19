@@ -1,3 +1,5 @@
+
+
 enum ProjectStatus {
   notStarted,
   inProgress,
@@ -10,8 +12,8 @@ class Project {
   final String id;
   final String name;
   final String description;
-  final DateTime startDate;
-  final DateTime? endDate;
+  final String startDate;
+  final String endDate;
   final String est;
   final ProjectStatus status;
 
@@ -21,7 +23,7 @@ class Project {
     required this.description,
     required this.startDate,
     required this.est,
-    this.endDate,
+    required this.endDate,
     this.status = ProjectStatus.notStarted,
   });
 }
