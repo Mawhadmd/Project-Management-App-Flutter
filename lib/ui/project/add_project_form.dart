@@ -1,5 +1,5 @@
 import 'package:date_field/date_field.dart';
-import 'package:finalmobileproject/Database_Interactions/add_project.dart';
+import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/class/project.class.dart';
 import 'package:finalmobileproject/util/date_parser.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class _AddprojectformState extends State<Addprojectform> {
       ).showSnackBar(const SnackBar(content: Text('Please fill all fields')));
       return;
     } else {
-      Map<String, dynamic> res = await addProject(
+      Map<String, dynamic> res = await ProjectService().addProject(
         Project(
           id: '',
           name: _projectNameController.text,
