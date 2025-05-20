@@ -1,6 +1,4 @@
 import 'package:finalmobileproject/Auth/AuthGate.dart';
-import 'package:finalmobileproject/Home_screen.dart';
-import 'package:finalmobileproject/Auth/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

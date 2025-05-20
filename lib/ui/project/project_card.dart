@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/class/project.class.dart';
+import 'package:finalmobileproject/types/project.class.dart';
 import 'package:flutter/material.dart';
 
 class Projectcard extends StatelessWidget {

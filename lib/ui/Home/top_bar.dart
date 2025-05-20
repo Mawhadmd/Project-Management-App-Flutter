@@ -1,10 +1,10 @@
+import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/UserSettings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Topbar extends StatelessWidget {
   const Topbar({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,9 +34,18 @@ class Topbar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
-              Text(
-                "Hello, User",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              FutureBuilder<String?>(
+                future: ProjectService().getUserName(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading...");
+                  }
+                  final username = snapshot.data ?? "User";
+                  return Text(
+                    "Hello, $username",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  );
+                },
               ),
               Transform.translate(
                 offset: const Offset(0.0, -5),
@@ -48,6 +57,7 @@ class Topbar extends StatelessWidget {
             ],
           ),
           Container(
+            clipBehavior: Clip.hardEdge,
             width: 60,
             height: 60,
             decoration: BoxDecoration(
@@ -57,19 +67,39 @@ class Topbar extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(30),
             ),
-            child: IconButton(
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (context) => Usersettings()));
-              },
-              icon: SvgPicture.asset(
-                "assets/DefaultUser.svg",
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
+            child:
+                ProjectService().getUserImage() == null
+                    ? IconButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Usersettings(),
+                          ),
+                        );
+                      },
+                      icon: SvgPicture.asset(
+                        "assets/DefaultUser.svg",
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                    )
+                    : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(0),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Usersettings(),
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        ProjectService().getUserImage()!,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
           ),
         ],
       ),

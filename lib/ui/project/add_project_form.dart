@@ -1,6 +1,6 @@
 import 'package:date_field/date_field.dart';
 import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
-import 'package:finalmobileproject/class/project.class.dart';
+import 'package:finalmobileproject/types/project.class.dart';
 import 'package:finalmobileproject/util/date_parser.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +39,7 @@ class _AddprojectformState extends State<Addprojectform> {
         ),
       );
 
-      if (!context.mounted) return;
-      final projectId = res['id'];
-      if (projectId?.contains("Error") ?? false || res['status'] == "Error") {
+      if (context.mounted && res['status'] == "Error") {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text('Error: ${res["details"]}')));
@@ -49,8 +47,10 @@ class _AddprojectformState extends State<Addprojectform> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Project added successfully')),
         );
+        Navigator.pop(context, {
+          true
+        }); // Pass true to indicate successful addition
       }
-      Navigator.pop(context);
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/ui/project/add_project_form.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,30 @@ class Newprojectbutton extends StatefulWidget {
 }
 
 class _NewprojectbuttonState extends State<Newprojectbutton> {
+  final projoctsnumber = FutureBuilder(
+    future: ProjectService().getProjectsLength(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      if (snapshot.hasData) {
+        return Text(
+          "You have ${snapshot.data} projects",
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).colorScheme.secondary.withAlpha(150),
+          ),
+        );
+      }
+      return Text(
+        'You have 0 projects',
+        style: TextStyle(
+          fontSize: 12,
+          color: Theme.of(context).colorScheme.secondary.withAlpha(150),
+        ),
+      );
+    },
+  );
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,13 +50,7 @@ class _NewprojectbuttonState extends State<Newprojectbutton> {
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
-            Text(
-              "You have x projects",
-              style: TextStyle(
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.secondary.withAlpha(150),
-              ),
-            ),
+            projoctsnumber,
           ],
         ),
         ElevatedButton.icon(

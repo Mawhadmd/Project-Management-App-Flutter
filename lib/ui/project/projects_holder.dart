@@ -1,5 +1,6 @@
+import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/ui/project/project_card.dart';
-import 'package:finalmobileproject/class/project.class.dart';
+import 'package:finalmobileproject/types/project.class.dart';
 import 'package:finalmobileproject/util/date_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,12 +14,12 @@ class Projectsholder extends StatefulWidget {
 }
 
 class _ProjectsholderState extends State<Projectsholder> {
-  final _fetchProjects = Supabase.instance.client.from('Projects').select();
+  
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _fetchProjects,
+      future: ProjectService().getProjects(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
