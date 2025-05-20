@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/project_card.dart';
+import 'package:finalmobileproject/ui/project/project_card.dart';
 import 'package:finalmobileproject/class/project.class.dart';
 import 'package:finalmobileproject/util/date_parser.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,7 @@ class _ProjectsholderState extends State<Projectsholder> {
           final projectsData = snapshot.data!;
           return ListView.builder(
             shrinkWrap: true,
+            
             itemCount: projectsData.length,
             itemBuilder: (context, index) {
               return Container(
