@@ -2,7 +2,6 @@ import 'package:finalmobileproject/Auth/AuthProvider.dart';
 import 'package:finalmobileproject/Auth/SignupScreen.dart';
 import 'package:finalmobileproject/Home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
