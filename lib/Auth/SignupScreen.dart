@@ -252,7 +252,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Divider(
                         color: Theme.of(
                           context,
-                        ).colorScheme.secondary.withOpacity(0.2),
+                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2))
                       ),
                     ),
                     Padding(
@@ -262,7 +262,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         style: TextStyle(
                           color: Theme.of(
                             context,
-                          ).colorScheme.secondary.withOpacity(0.7),
+                          ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.7)),
                         ),
                       ),
                     ),
@@ -270,7 +270,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Divider(
                         color: Theme.of(
                           context,
-                        ).colorScheme.secondary.withOpacity(0.2),
+                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                   ],
@@ -284,7 +284,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     side: BorderSide(
                       color: Theme.of(
                         context,
-                      ).colorScheme.secondary.withOpacity(0.2),
+                      ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

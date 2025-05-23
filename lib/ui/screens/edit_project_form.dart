@@ -75,7 +75,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Project updated successfully')),
         );
-        Navigator.pop(context, true); // Pass true to indicate successful update
+        Navigator.pop(context, true); // Pop back with success flag
       }
     }
   }

@@ -21,15 +21,41 @@ class ProjectService {
     return _db.auth.currentSession?.user.userMetadata?['avatar_url'];
   }
 
-  Future<List<Map<String, dynamic>>> getProjects() {
+  Future<List<Map<String, dynamic>>> getProjects(
+    String? searchphrase,
+    ProjectStatus? selectedstatus,
+  ) {
+    if (searchphrase != null && selectedstatus == null) {
+      return Supabase.instance.client
+          .from('Projects')
+          .select()
+          .eq("owner", _db.auth.currentUser?.id as String)
+          .ilike('name', '%$searchphrase%');
+    } else if (searchphrase != null && selectedstatus != null) {
+      return Supabase.instance.client
+          .from('Projects')
+          .select()
+          .eq("owner", _db.auth.currentUser?.id as String)
+          .eq('status', selectedstatus.name)
+          .ilike('name', '%$searchphrase%');
+    } else if (selectedstatus != null) {
+      return Supabase.instance.client
+          .from('Projects')
+          .select()
+          .eq("owner", _db.auth.currentUser?.id as String)
+          .eq('status', selectedstatus.name);
+    }
     return Supabase.instance.client
         .from('Projects')
         .select()
         .eq("owner", _db.auth.currentUser?.id as String);
   }
 
-  Future<String> getProjectsLength() async {
-    return (await getProjects()).length.toString();
+  Future<String> getProjectsLength(String searchphrase, selectedstatus) async {
+    return (await getProjects(
+      searchphrase == "" ? null : searchphrase,
+      selectedstatus == null ? null : selectedstatus,
+    )).length.toString();
   }
 
   // Add new project
@@ -133,6 +159,31 @@ class ProjectService {
       return {'status': 'Success'};
     } on PostgrestException catch (e) {
       return {'status': 'Error', 'details': '${e.message} ${e.code}'};
+    }
+  }
+
+  Future<Project?> getProject(String projectId) async {
+    try {
+      final response =
+          await _db.from('Projects').select().eq('id', projectId).single();
+
+      return Project(
+        id: response['id'].toString(),
+        name: response['name'].toString(),
+        description: response['description'].toString(),
+        est: response['est'].toString(),
+        startDate: DateFormat(
+          'd MMM yyyy',
+        ).format(DateTime.parse(response['startDate'])),
+        endDate: DateFormat(
+          'd MMM yyyy',
+        ).format(DateTime.parse(response['endDate'])),
+        status: ProjectStatus.values.firstWhere(
+          (e) => e.name == response['status'],
+        ),
+      );
+    } catch (e) {
+      return null;
     }
   }
 }

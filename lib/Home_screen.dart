@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const DashboardScreen(),
-    const ProjectsScreen(),
+    const Projectsscreen(),
     const TasksScreen(),
     const ProfileScreen(),
   ];

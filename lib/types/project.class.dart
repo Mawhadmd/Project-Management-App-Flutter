@@ -26,4 +26,6 @@ class Project {
     required this.endDate,
     this.status = ProjectStatus.notStarted,
   });
+
+
 }
