@@ -1,5 +1,8 @@
+import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/types/project.class.dart';
+import 'package:finalmobileproject/ui/project/edit_project_form.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Projectcard extends StatelessWidget {
   const Projectcard({super.key, required this.project});
@@ -10,14 +13,12 @@ class Projectcard extends StatelessWidget {
     return DefaultTextStyle(
       style: TextStyle(
         color: Theme.of(context).colorScheme.secondary,
-
         fontSize: 16,
         fontWeight: FontWeight.w500,
       ),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),
-
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 238, 238, 238),
           boxShadow: [
@@ -33,39 +34,155 @@ class Projectcard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(14, 14, 14, 100),
-                borderRadius: BorderRadius.circular(8),
-                // border: Border.all(color: Colors.black12),
-              ),
-              child: Text(
-                project.status.name == "completed"
-                    ? "Completed"
-                    : project.status.name == "inProgress"
-                    ? "In Progress"
-                    : project.status.name == "onHold"
-                    ? "On Hold"
-                    : project.status.name == "cancelled"
-                    ? "Cancelled"
-                    : "Not Started",
-                style: TextStyle(
-                  color:
-                      project.status.name == "completed"
-                          ? Colors.green
-                          : project.status.name == "inProgress"
-                          ? Colors.orange
-                          : project.status.name == "onHold"
-                          ? Colors.blue
-                          : project.status.name == "cancelled"
-                          ? Colors.red
-                          : Color.fromRGBO(9, 9, 9, 100),
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(14, 14, 14, 100),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    project.status.name == "completed"
+                        ? "Completed"
+                        : project.status.name == "inProgress"
+                        ? "In Progress"
+                        : project.status.name == "onHold"
+                        ? "On Hold"
+                        : project.status.name == "cancelled"
+                        ? "Cancelled"
+                        : "Not Started",
+                    style: TextStyle(
+                      color:
+                          project.status.name == "completed"
+                              ? Colors.green.shade700
+                              : project.status.name == "inProgress"
+                              ? Colors.orange.shade700
+                              : project.status.name == "onHold"
+                              ? Colors.blue.shade700
+                              : project.status.name == "cancelled"
+                              ? Colors.red.shade700
+                              : const Color.fromRGBO(9, 9, 9, 100),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => EditProjectForm(project: project),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        // First confirmation
+                        final firstConfirm = await showDialog<bool>(
+                          context: context,
+                          builder:
+                              (context) => AlertDialog(
+                                title: const Text('Delete Project'),
+                                content: Text(
+                                  'Are you sure you want to delete "${project.name}"?',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.pop(context, false),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.pop(context, true),
+                                    child: const Text('Delete'),
+                                  ),
+                                ],
+                              ),
+                        );
+
+                        if (firstConfirm != true || !context.mounted) return;
+
+                        // Second confirmation
+                        final secondConfirm = await showDialog<bool>(
+                          context: context,
+                          builder:
+                              (context) => AlertDialog(
+                                title: const Text('Confirm Deletion'),
+                                content: const Text(
+                                  'This action cannot be undone. Are you Utterly sure?',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.pop(context, false),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.pop(context, true),
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.red,
+                                    ),
+                                    child: const Text('Yes, Delete'),
+                                  ),
+                                ],
+                              ),
+                        );
+
+                        if (secondConfirm != true || !context.mounted) return;
+
+                        try {
+                          final result = await ProjectService().deleteProject(
+                            project.id,
+                          );
+                          if (result['status'] == 'Error') {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Error: ${result['details']}'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          } else {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Project deleted successfully'),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error deleting project: $e'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.delete),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Text(

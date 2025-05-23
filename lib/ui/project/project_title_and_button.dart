@@ -34,6 +34,7 @@ class _NewprojectbuttonState extends State<Newprojectbutton> {
       );
     },
   );
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -65,7 +66,6 @@ class _NewprojectbuttonState extends State<Newprojectbutton> {
             "New Project",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(
               context,

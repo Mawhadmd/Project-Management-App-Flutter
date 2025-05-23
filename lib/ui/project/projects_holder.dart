@@ -4,22 +4,37 @@ import 'package:finalmobileproject/types/project.class.dart';
 import 'package:finalmobileproject/util/date_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'dart:async';
 
 class Projectsholder extends StatefulWidget {
   const Projectsholder({super.key});
 
   @override
-  State<Projectsholder> createState() => _ProjectsholderState();
+  State<Projectsholder> createState() => ProjectsholderState();
 }
 
-class _ProjectsholderState extends State<Projectsholder> {
-  
+class ProjectsholderState extends State<Projectsholder> {
+  final _projectService = ProjectService();
+  late final Stream<List<Map<String, dynamic>>> _projectsStream;
+
+  @override
+  void initState() {
+    super.initState();
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) {
+      _projectsStream = Stream.value([]);
+      return;
+    }
+    _projectsStream = Supabase.instance.client
+        .from('Projects')
+        .stream(primaryKey: ['id'])
+        .eq('owner', userId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ProjectService().getProjects(),
+    return StreamBuilder(
+      stream: _projectsStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -36,7 +51,6 @@ class _ProjectsholderState extends State<Projectsholder> {
           final projectsData = snapshot.data!;
           return ListView.builder(
             shrinkWrap: true,
-            
             itemCount: projectsData.length,
             itemBuilder: (context, index) {
               return Container(
@@ -47,13 +61,11 @@ class _ProjectsholderState extends State<Projectsholder> {
                     name: projectsData[index]['name'].toString(),
                     est: projectsData[index]['est'].toString(),
                     startDate: dateParser(
-                          projectsData[index]['startDate'].toString(),
-                        ),
-
-                    endDate:  dateParser(
-                          projectsData[index]['endDate'].toString(),
-                        ),
-
+                      projectsData[index]['startDate'].toString(),
+                    ),
+                    endDate: dateParser(
+                      projectsData[index]['endDate'].toString(),
+                    ),
                     status: ProjectStatus.values.firstWhere(
                       (e) => e.name == projectsData[index]['status'],
                     ),

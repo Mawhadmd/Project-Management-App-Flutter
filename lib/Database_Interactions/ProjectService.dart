@@ -110,7 +110,7 @@ class ProjectService {
   // Delete project
   Future<Map<String, dynamic>> deleteProject(String projectId) async {
     try {
-      await _db.from("Projects").delete().eq('id', projectId);
+      await _db.from("Projects").delete().eq('id', projectId).select();
       return {'status': 'Success'};
     } on PostgrestException catch (e) {
       return {'status': 'Error', 'details': '${e.message} ${e.code}'};

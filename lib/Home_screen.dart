@@ -10,7 +10,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -18,13 +17,9 @@ class HomeScreen extends StatelessWidget {
             children: [
               Topbar(),
               const SizedBox(height: 20),
-
-              Newprojectbutton(),
-
+              const Newprojectbutton(),
               const SizedBox(height: 20),
-
-              // Project card
-              Expanded(child: Projectsholder()),
+              const Expanded(child: Projectsholder()),
             ],
           ),
         ),
