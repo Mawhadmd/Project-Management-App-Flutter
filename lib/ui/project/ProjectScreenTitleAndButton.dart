@@ -14,7 +14,13 @@ class _NewprojectbuttonState extends State<Newprojectbutton> {
     future: ProjectService().getProjectsLength(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(child: CircularProgressIndicator());
+        return Text(
+          "You have x projects",
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).colorScheme.secondary.withAlpha(150),
+          ),
+        );
       }
       if (snapshot.hasData) {
         return Text(
@@ -67,11 +73,8 @@ class _NewprojectbuttonState extends State<Newprojectbutton> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(
-              context,
-            ).colorScheme.secondary,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             foregroundColor: Theme.of(context).colorScheme.primary,
-            iconColor: Theme.of(context).colorScheme.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),

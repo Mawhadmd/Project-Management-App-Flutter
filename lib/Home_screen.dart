@@ -1,11 +1,36 @@
 import 'package:finalmobileproject/ui/Home/bottom_bar.dart';
-import 'package:finalmobileproject/ui/project/project_title_and_button.dart';
-import 'package:finalmobileproject/ui/project/projects_holder.dart';
-import 'package:finalmobileproject/ui/Home/top_bar.dart';
+
+import 'package:finalmobileproject/ui/screens/dashboard_screen.dart';
+
+import 'package:finalmobileproject/ui/screens/profile_screen.dart';
+import 'package:finalmobileproject/ui/screens/projects_screen.dart';
+import 'package:finalmobileproject/ui/screens/tasks_screen.dart';
+
+
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 1; // Start with Projects tab selected
+
+  final List<Widget> _screens = [
+    const DashboardScreen(),
+    const ProjectsScreen(),
+    const TasksScreen(),
+    const ProfileScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +42,13 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Topbar(),
               const SizedBox(height: 20),
-              const Newprojectbutton(),
-              const SizedBox(height: 20),
-              const Expanded(child: Projectsholder()),
-              BottomBar(),
+
+              Expanded(child: _screens[_selectedIndex]),
+              BottomBar(
+                selectedIndex: _selectedIndex,
+                onItemTapped: _onItemTapped,
+              ),
             ],
           ),
         ),

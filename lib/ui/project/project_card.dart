@@ -2,7 +2,7 @@ import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/types/project.class.dart';
 import 'package:finalmobileproject/ui/project/edit_project_form.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class Projectcard extends StatelessWidget {
   const Projectcard({super.key, required this.project});

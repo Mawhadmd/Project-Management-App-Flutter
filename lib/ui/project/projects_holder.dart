@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
+
 import 'package:finalmobileproject/ui/project/project_card.dart';
 import 'package:finalmobileproject/types/project.class.dart';
 import 'package:finalmobileproject/util/date_parser.dart';
@@ -14,7 +14,6 @@ class Projectsholder extends StatefulWidget {
 }
 
 class ProjectsholderState extends State<Projectsholder> {
-  final _projectService = ProjectService();
   late final Stream<List<Map<String, dynamic>>> _projectsStream;
 
   @override
@@ -33,7 +32,8 @@ class ProjectsholderState extends State<Projectsholder> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return 
+    StreamBuilder(
       stream: _projectsStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

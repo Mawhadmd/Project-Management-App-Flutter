@@ -1,4 +1,5 @@
 import 'package:finalmobileproject/Auth/AuthProvider.dart';
+import 'package:finalmobileproject/util/decimal_to_alpha_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:finalmobileproject/Home_screen.dart';
 
@@ -117,7 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: Theme.of(
                       context,
-                    ).colorScheme.secondary.withOpacity(0.7),
+                    ).colorScheme.secondary.withAlpha((decimal_to_alpha_colors(0.7))),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -140,7 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderSide: BorderSide(
                         color: Theme.of(
                           context,
-                        ).colorScheme.secondary.withOpacity(0.2),
+                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(

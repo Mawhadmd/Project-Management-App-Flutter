@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
           secondary: main,
           surface: background,
           primary: accentColor,
+          onSurface: main,
+          outline: main,
         ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(color: main),
