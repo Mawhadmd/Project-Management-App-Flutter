@@ -20,16 +20,18 @@ class Projectcard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 238, 238, 238),
+          color: Theme.of(context).colorScheme.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withAlpha(50),
+              color: Theme.of(context).colorScheme.shadow.withAlpha(25),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
           ],
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.black12),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline.withAlpha(25),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -69,7 +69,7 @@ class _NewprojectbuttonState extends State<Newprojectbutton> {
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(
               context,
-            ).colorScheme.secondary.withAlpha(255),
+            ).colorScheme.secondary,
             foregroundColor: Theme.of(context).colorScheme.primary,
             iconColor: Theme.of(context).colorScheme.primary,
             shape: RoundedRectangleBorder(

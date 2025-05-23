@@ -58,8 +58,8 @@ class Topbar extends StatelessWidget {
           ),
           Container(
             clipBehavior: Clip.hardEdge,
-            width: 60,
-            height: 60,
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: Colors.grey.shade100,
               border: Border.all(

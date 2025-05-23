@@ -17,10 +17,10 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  final Color background = Color(0xFFf7fff7);
-  final Color main = Color(0xFF292f36);
+  final Color background = Color(0xFFf4f6f8);
+  final Color main = Color(0xFF212528);
   final Color accentColor = Color(0xFF4ecdc4);
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
