@@ -35,7 +35,7 @@ class ProjectFilters extends StatelessWidget {
                 color: _getStatusColor(status),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

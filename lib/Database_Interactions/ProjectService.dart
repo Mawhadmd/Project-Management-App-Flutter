@@ -54,7 +54,7 @@ class ProjectService {
   Future<String> getProjectsLength(String searchphrase, selectedstatus) async {
     return (await getProjects(
       searchphrase == "" ? null : searchphrase,
-      selectedstatus == null ? null : selectedstatus,
+      selectedstatus,
     )).length.toString();
   }
 

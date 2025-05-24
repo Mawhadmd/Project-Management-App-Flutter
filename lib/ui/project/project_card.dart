@@ -2,7 +2,7 @@ import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
 import 'package:finalmobileproject/types/project.class.dart';
 import 'package:finalmobileproject/ui/screens/edit_project_form.dart';
 
-import 'package:finalmobileproject/ui/screens/project_details_screen.dart';
+import 'package:finalmobileproject/ui/screens/ProjectDetailsScreen/project_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class Projectcard extends StatelessWidget {
