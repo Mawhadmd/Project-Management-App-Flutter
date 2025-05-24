@@ -1,8 +1,8 @@
-import 'package:finalmobileproject/types/project.class.dart';
-import 'package:finalmobileproject/ui/project/ProjectScreenTitleAndButton.dart';
-import 'package:finalmobileproject/ui/project/ProjectsSearch.dart';
-import 'package:finalmobileproject/ui/project/project_filters.dart';
-import 'package:finalmobileproject/ui/project/projects_holder.dart';
+import 'package:finalmobileproject/models/project.class.dart';
+import 'package:finalmobileproject/widgets/project/ProjectScreenTitleAndButton.dart';
+import 'package:finalmobileproject/widgets/project/ProjectsSearch.dart';
+import 'package:finalmobileproject/widgets/project/project_filters.dart';
+import 'package:finalmobileproject/widgets/project/projects_holder.dart';
 import 'package:flutter/material.dart';
 
 class Projectsscreen extends StatefulWidget {

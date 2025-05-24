@@ -1,7 +1,7 @@
 import 'package:finalmobileproject/Auth/AuthProvider.dart';
-import 'package:finalmobileproject/util/decimal_to_alpha_colors.dart';
+import 'package:finalmobileproject/utils/decimal_to_alpha_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:finalmobileproject/Home_screen.dart';
+import 'package:finalmobileproject/screens/home/Home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

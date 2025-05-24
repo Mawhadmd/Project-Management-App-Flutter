@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/types/project.class.dart';
+import 'package:finalmobileproject/models/project.class.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:intl/intl.dart';
 

@@ -1,10 +1,10 @@
-import 'package:finalmobileproject/ui/Home/bottom_bar.dart';
+import 'package:finalmobileproject/widgets/bottom_bar.dart';
 
-import 'package:finalmobileproject/ui/screens/dashboard_screen.dart';
+import 'package:finalmobileproject/screens/home/dashboard_screen.dart';
 
-import 'package:finalmobileproject/ui/screens/profile_screen.dart';
-import 'package:finalmobileproject/ui/screens/projects_screen.dart';
-import 'package:finalmobileproject/ui/screens/tasks_screen.dart';
+import 'package:finalmobileproject/screens/profile/profile_screen.dart';
+import 'package:finalmobileproject/screens/projects/projects_screen.dart';
+import 'package:finalmobileproject/screens/tasks/tasks_screen.dart';
 
 
 import 'package:flutter/material.dart';

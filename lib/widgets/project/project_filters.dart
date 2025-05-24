@@ -1,5 +1,5 @@
-import 'package:finalmobileproject/types/project.class.dart';
-import 'package:finalmobileproject/util/decimal_to_alpha_colors.dart';
+import 'package:finalmobileproject/models/project.class.dart';
+import 'package:finalmobileproject/utils/decimal_to_alpha_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProjectFilters extends StatelessWidget {

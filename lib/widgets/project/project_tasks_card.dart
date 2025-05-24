@@ -1,7 +1,7 @@
-import 'package:finalmobileproject/util/date_parser.dart';
+import 'package:finalmobileproject/utils/date_parser.dart';
 import 'package:flutter/material.dart';
-import 'package:finalmobileproject/Database_Interactions/TasksService.dart';
-import 'package:finalmobileproject/util/time_left_until_a_specific_date.dart';
+import 'package:finalmobileproject/services/TasksService.dart';
+import 'package:finalmobileproject/utils/time_left_until_a_specific_date.dart';
 import 'package:intl/intl.dart';
 
 class ProjectTasksCard extends StatelessWidget {

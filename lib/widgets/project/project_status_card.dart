@@ -1,6 +1,6 @@
-import 'package:finalmobileproject/util/status_utils.dart';
+import 'package:finalmobileproject/utils/status_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:finalmobileproject/types/project.class.dart';
+import 'package:finalmobileproject/models/project.class.dart';
 
 class ProjectStatusCard extends StatelessWidget {
   final Project project;

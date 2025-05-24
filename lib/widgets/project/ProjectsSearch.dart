@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/util/decimal_to_alpha_colors.dart';
+import 'package:finalmobileproject/utils/decimal_to_alpha_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

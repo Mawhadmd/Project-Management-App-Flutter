@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:finalmobileproject/Auth/LoginScreen.dart';
-import 'package:finalmobileproject/Home_screen.dart';
+import 'package:finalmobileproject/screens/home/Home_screen.dart';
 
 class Authgate extends StatelessWidget {
   const Authgate({super.key});

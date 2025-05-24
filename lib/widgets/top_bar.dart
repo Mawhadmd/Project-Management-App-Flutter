@@ -1,5 +1,5 @@
-import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
-import 'package:finalmobileproject/UserSettings.dart';
+import 'package:finalmobileproject/services/ProjectService.dart';
+import 'package:finalmobileproject/screens/profile/UserSettings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/types/project.class.dart';
+import 'package:finalmobileproject/models/project.class.dart';
 import 'package:flutter/material.dart';
 
 class Newprojectbutton extends StatelessWidget {

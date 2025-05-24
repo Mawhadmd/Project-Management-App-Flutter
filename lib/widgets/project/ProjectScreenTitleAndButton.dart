@@ -1,6 +1,6 @@
-import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
-import 'package:finalmobileproject/types/project.class.dart';
-import 'package:finalmobileproject/ui/screens/add_project_form.dart';
+import 'package:finalmobileproject/services/ProjectService.dart';
+import 'package:finalmobileproject/models/project.class.dart';
+import 'package:finalmobileproject/screens/projects/add_project_form.dart';
 import 'package:flutter/material.dart';
 
 class Newprojectbutton extends StatefulWidget {

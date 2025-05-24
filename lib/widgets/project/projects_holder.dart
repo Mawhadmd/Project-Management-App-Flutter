@@ -1,6 +1,6 @@
-import 'package:finalmobileproject/ui/project/project_card.dart';
-import 'package:finalmobileproject/types/project.class.dart';
-import 'package:finalmobileproject/util/date_parser.dart';
+import 'package:finalmobileproject/widgets/project/project_card.dart';
+import 'package:finalmobileproject/models/project.class.dart';
+import 'package:finalmobileproject/utils/date_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:async';

@@ -1,10 +1,10 @@
-import 'package:finalmobileproject/Database_Interactions/ProjectService.dart';
-import 'package:finalmobileproject/types/project.class.dart';
-import 'package:finalmobileproject/ui/screens/edit_project_form.dart';
-import 'package:finalmobileproject/ui/screens/ProjectDetailsScreen/project_status_card.dart';
-import 'package:finalmobileproject/ui/screens/ProjectDetailsScreen/project_description_card.dart';
-import 'package:finalmobileproject/ui/screens/ProjectDetailsScreen/project_timeline_card.dart';
-import 'package:finalmobileproject/ui/screens/ProjectDetailsScreen/project_tasks_card.dart';
+import 'package:finalmobileproject/services/ProjectService.dart';
+import 'package:finalmobileproject/models/project.class.dart';
+import 'package:finalmobileproject/screens/projects/edit_project_form.dart';
+import 'package:finalmobileproject/widgets/project/project_status_card.dart';
+import 'package:finalmobileproject/widgets/project/project_description_card.dart';
+import 'package:finalmobileproject/widgets/project/project_timeline_card.dart';
+import 'package:finalmobileproject/widgets/project/project_tasks_card.dart';
 import 'package:flutter/material.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   }
 
   Future<void> _editProject() async {
-    final result = await Navigator.push(
+    final result = await Navigator.push<bool>(
       context,
       MaterialPageRoute(
         builder: (context) => EditProjectForm(project: _project),
@@ -54,7 +54,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
           IconButton(
             onPressed: () async {
               // First confirmation
-              final firstConfirm = await showDialog(
+              final firstConfirm = await showDialog<bool>(
                 context: context,
                 builder:
                     (context) => AlertDialog(

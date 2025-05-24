@@ -1,4 +1,4 @@
-import 'package:finalmobileproject/util/time_left_until_a_specific_date.dart';
+import 'package:finalmobileproject/utils/time_left_until_a_specific_date.dart';
 import 'package:flutter/material.dart';
 
 class ProjectTimelineCard extends StatelessWidget {
