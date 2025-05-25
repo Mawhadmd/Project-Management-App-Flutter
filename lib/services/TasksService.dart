@@ -7,23 +7,27 @@ class Tasksservice {
     return _db.from('Tasks').select().eq("projectID", p_id);
   }
 
-  Future<dynamic> addTask({
+  Future<void> addTask({
     required String title,
     required String description,
     required int projectId,
     DateTime? startDate,
     DateTime? dueDate,
+    String priority = 'Medium',
   }) async {
-    final data = {
+    final user = Supabase.instance.client.auth.currentUser;
+    if (user == null) throw Exception('User not authenticated');
+
+    await Supabase.instance.client.from('Tasks').insert({
       'title': title,
       'description': description,
       'projectID': projectId,
+      'owner': user.id,
+      'start_date': startDate?.toIso8601String(),
+      'due_date': dueDate?.toIso8601String(),
+      'priority': priority,
       'isDone': false,
-      if (startDate != null) 'startDate': startDate.toIso8601String(),
-      if (dueDate != null) 'dueDate': dueDate.toIso8601String(),
-    };
-
-    return await _db.from('Tasks').insert(data);
+    });
   }
 
   setisDone(bool value, int id) async {

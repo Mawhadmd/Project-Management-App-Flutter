@@ -8,10 +8,7 @@ class TeamsScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Teams'),
-      //   backgroundColor: colorScheme.surface,
-      // ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -4,14 +4,13 @@ import 'package:finalmobileproject/widgets/profile/ActionButton.dart';
 import 'package:finalmobileproject/widgets/profile/StatCard.dart';
 import 'package:flutter/material.dart';
 import 'package:finalmobileproject/screens/profile/UserSettings.dart';
-import 'package:finalmobileproject/screens/teams/teams_screen.dart';
 
 import '../../services/ProjectService.dart';
 import '../../services/TasksService.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
+  const ProfileScreen({super.key, required this.changeTab});
+  final Function changeTab;
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -24,10 +23,7 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: const BorderRadius.all(Radius.circular(40)),
-                ),
+
                 child: Column(
                   children: [
                     ProjectService().getUserImage() == null
@@ -35,6 +31,10 @@ class ProfileScreen extends StatelessWidget {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.black.withAlpha(100),
+                            ),
                             shape: BoxShape.circle,
                             color: colorScheme.primary.withAlpha(
                               decimal_to_alpha_colors(0.1),
@@ -50,10 +50,16 @@ class ProfileScreen extends StatelessWidget {
                           width: double.infinity,
                           height: 100,
                           clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.black.withAlpha(100),
+                            ),
+                            shape: BoxShape.circle,
+                          ),
                           child: Image.network(
                             ProjectService().getUserImage()!,
-                            fit: BoxFit.contain,
+                            fit: BoxFit.scaleDown,
                           ),
                         ),
                     const SizedBox(height: 16),
@@ -71,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                             context,
                           ).textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: colorScheme.onPrimaryContainer,
+                            color: colorScheme.secondary,
                           ),
                         );
                       },
@@ -250,22 +256,9 @@ class ProfileScreen extends StatelessWidget {
                       'View Projects',
                       Icons.folder_outlined,
                       () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => Projectsscreen(),
-                          ),
-                        );
+                        changeTab(1);
                       },
                     ),
-                    const SizedBox(height: 12),
-                    ActionButton(context, 'Teams', Icons.people_outline, () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TeamsScreen(),
-                        ),
-                      );
-                    }),
                   ],
                 ),
               ),

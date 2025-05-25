@@ -24,27 +24,29 @@ class _ProjectsscreenState extends State<Projectsscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Search(setsearchvalue: setsearchvalue),
-        ProjectFilters(
-          selectedStatus: selectedStatus,
-          onStatusSelected: (status) {
-            setState(() {
-              selectedStatus = status;
-            });
-          },
-        ),
-        Newprojectbutton(
-          searchphrase: searchphrase,
-          selectedStatus: selectedStatus,
-        ),
-        const SizedBox(height: 20),
-        Projectsholder(
-          searchphrase: searchphrase,
-          selectedStatus: selectedStatus,
-        ),
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          Search(setsearchvalue: setsearchvalue),
+          ProjectFilters(
+            selectedStatus: selectedStatus,
+            onStatusSelected: (status) {
+              setState(() {
+                selectedStatus = status;
+              });
+            },
+          ),
+          Newprojectbutton(
+            searchphrase: searchphrase,
+            selectedStatus: selectedStatus,
+          ),
+          const SizedBox(height: 20),
+          Projectsholder(
+            searchphrase: searchphrase,
+            selectedStatus: selectedStatus,
+          ),
+        ],
+      ),
     );
   }
 }

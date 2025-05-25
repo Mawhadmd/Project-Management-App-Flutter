@@ -51,12 +51,20 @@ class ProjectTasksCard extends StatelessWidget {
                 .eq('projectID', projectId)
                 .order('dueDate', ascending: true),
             builder: (context, snapshot) {
+              // ... existing code ...
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: const Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
                 );
               }
+              // ... existing code ...
 
               if (snapshot.hasError) {
                 return Padding(

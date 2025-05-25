@@ -17,15 +17,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late List<Widget> _screens;
   int _selectedIndex = 1; // Start with Projects tab selected
+  void changeBottomBarIndex(index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
-  final List<Widget> _screens = [
-    const DashboardScreen(),
-    const Projectsscreen(),
-    const TasksScreen(),
-    const TeamsScreen(),
-    const ProfileScreen(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      const DashboardScreen(),
+      const Projectsscreen(),
+      const TasksScreen(),
+      const TeamsScreen(),
+      ProfileScreen(changeTab: changeBottomBarIndex),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {

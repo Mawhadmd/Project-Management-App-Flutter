@@ -17,6 +17,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   DateTime? _startDate;
   DateTime? _dueDate;
   bool _startTomorrow = false;
+  String _priority = 'Medium';
   final Tasksservice _tasksService = Tasksservice();
 
   @override
@@ -75,6 +76,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         projectId: widget.projectId,
         startDate: _startDate,
         dueDate: _dueDate,
+        priority: _priority,
       );
 
       if (mounted) {
@@ -104,6 +106,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Add New Task')),
       body: SingleChildScrollView(
@@ -134,6 +138,55 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: _priority,
+                decoration: const InputDecoration(
+                  labelText: 'Priority',
+                  border: OutlineInputBorder(),
+                ),
+                items:
+                    ['Low', 'Medium', 'High'].map((String value) {
+                      Color color;
+                      switch (value) {
+                        case 'Low':
+                          color = Colors.green;
+                          break;
+                        case 'Medium':
+                          color = Colors.orange;
+                          break;
+                        case 'High':
+                          color = Colors.red;
+                          break;
+                        default:
+                          color = Colors.grey;
+                      }
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 12,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: color,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(value),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _priority = newValue;
+                    });
+                  }
+                },
               ),
               const SizedBox(height: 16),
               CheckboxListTile(
