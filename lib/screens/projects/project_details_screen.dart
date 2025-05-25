@@ -1,10 +1,11 @@
 import 'package:finalmobileproject/services/ProjectService.dart';
 import 'package:finalmobileproject/models/project.class.dart';
 import 'package:finalmobileproject/screens/projects/edit_project_form.dart';
+import 'package:finalmobileproject/utils/status_utils.dart';
 import 'package:finalmobileproject/widgets/project/project_status_card.dart';
 import 'package:finalmobileproject/widgets/project/project_description_card.dart';
 import 'package:finalmobileproject/widgets/project/project_timeline_card.dart';
-import 'package:finalmobileproject/widgets/project/project_tasks_card.dart';
+import 'package:finalmobileproject/widgets/project_tasks_card.dart';
 import 'package:flutter/material.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
@@ -48,7 +49,27 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_project.name),
+        title: Row(
+          spacing: 8.0,
+          children: [
+            Text(_project.name),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(14, 14, 14, 100),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                getStatusText(_project.status.name),
+                style: TextStyle(
+                  color: getStatusColor(_project.status.name),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(onPressed: _editProject, icon: const Icon(Icons.edit)),
           IconButton(
@@ -148,7 +169,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProjectStatusCard(project: _project),
+            // ProjectStatusCard(project: _project),
             const SizedBox(height: 24),
             ProjectDescriptionCard(description: _project.description),
             const SizedBox(height: 24),

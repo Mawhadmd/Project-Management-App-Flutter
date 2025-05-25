@@ -5,7 +5,7 @@ import 'package:finalmobileproject/screens/home/dashboard_screen.dart';
 import 'package:finalmobileproject/screens/profile/profile_screen.dart';
 import 'package:finalmobileproject/screens/projects/projects_screen.dart';
 import 'package:finalmobileproject/screens/tasks/tasks_screen.dart';
-
+import 'package:finalmobileproject/screens/teams/teams_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const DashboardScreen(),
     const Projectsscreen(),
     const TasksScreen(),
+    const TeamsScreen(),
     const ProfileScreen(),
   ];
 

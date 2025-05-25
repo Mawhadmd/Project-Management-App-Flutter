@@ -33,7 +33,8 @@ class ProjectsholderState extends State<Projectsholder> {
     _projectsStream = Supabase.instance.client
         .from('Projects')
         .stream(primaryKey: ['id'])
-        .eq('owner', userId);
+        .eq('owner', userId)
+        .order('endDate', ascending: true);
 
     // Add loading delay
     Future.delayed(const Duration(seconds: 1), () {

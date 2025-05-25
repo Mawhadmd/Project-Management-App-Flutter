@@ -20,7 +20,9 @@ class ProjectService {
   getUserImage() {
     return _db.auth.currentSession?.user.userMetadata?['avatar_url'];
   }
-
+  Future<int> getProjectsCount() async {
+    return (await _db.from('Projects').select().eq('owner', _db.auth.currentUser?.id as String).count()).count;
+  }
   Future<List<Map<String, dynamic>>> getProjects(
     String? searchphrase,
     ProjectStatus? selectedstatus,
@@ -185,5 +187,18 @@ class ProjectService {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<double> getProjectTasksCount(id) async {
+    var total =
+        await _db.from('Tasks').select().eq("projectID", int.parse(id)).count();
+    var isDone =
+        await _db
+            .from('Tasks')
+            .select()
+            .eq("projectID", int.parse(id))
+            .eq('isDone', true)
+            .count();
+    return total.count > 0? isDone.count / total.count: -1;
   }
 }

@@ -14,6 +14,7 @@ class Tasks {
   final String description;
   final String startDate;
   final String dueDate;
+  final bool isDone;
   final List<String> collaborators;
   final TasksStatus status;
 
@@ -22,6 +23,7 @@ class Tasks {
     required this.title,
     required this.description,
     required this.startDate,
+    required this.isDone,
     required this.collaborators,
     required this.dueDate,
     this.status = TasksStatus.notStarted,

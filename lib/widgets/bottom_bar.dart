@@ -14,16 +14,10 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Theme.of(
-            context,
-          ).colorScheme.outline.withAlpha(decimal_to_alpha_colors(0.1)),
-          width: 1,
-        ),
         boxShadow: [
           BoxShadow(
             color: Theme.of(
@@ -59,6 +53,10 @@ class BottomBar extends StatelessWidget {
               label: 'Projects',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people_outline),
+              label: 'Teams',
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),

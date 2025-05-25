@@ -3,7 +3,10 @@ import 'package:finalmobileproject/models/project.class.dart';
 import 'package:finalmobileproject/screens/projects/edit_project_form.dart';
 
 import 'package:finalmobileproject/screens/projects/project_details_screen.dart';
+import 'package:finalmobileproject/utils/status_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:finalmobileproject/widgets/completion_circle.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Projectcard extends StatelessWidget {
   const Projectcard({super.key, required this.project});
@@ -60,26 +63,9 @@ class Projectcard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      project.status.name == "completed"
-                          ? "Completed"
-                          : project.status.name == "inProgress"
-                          ? "In Progress"
-                          : project.status.name == "onHold"
-                          ? "On Hold"
-                          : project.status.name == "cancelled"
-                          ? "Cancelled"
-                          : "Not Started",
+                      getStatusText(project.status.name),
                       style: TextStyle(
-                        color:
-                            project.status.name == "completed"
-                                ? Colors.green.shade700
-                                : project.status.name == "inProgress"
-                                ? Colors.orange.shade700
-                                : project.status.name == "onHold"
-                                ? Colors.blue.shade700
-                                : project.status.name == "cancelled"
-                                ? Colors.red.shade700
-                                : const Color.fromRGBO(9, 9, 9, 100),
+                        color: getStatusColor(project.status.name),
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -202,25 +188,69 @@ class Projectcard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              Text(
-                project.name.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 16),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.calendar_today,
-                    size: 20,
-                    color: Theme.of(context).colorScheme.secondary,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        project.name.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_today,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            "Due ${project.endDate}",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 6),
-                  Text(
-                    "Due ${project.endDate}",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  StreamBuilder(
+                    stream: Supabase.instance.client
+                        .from('Tasks')
+                        .stream(primaryKey: [project.id])
+                        .eq('projectID', int.parse(project.id)),
+                    builder:
+                        (context, snapshot) => FutureBuilder<double>(
+                          future: ProjectService().getProjectTasksCount(
+                            project.id,
+                          ),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const SizedBox(
+                                width: 60,
+                                height: 60,
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            if (snapshot.hasError || !snapshot.hasData) {
+                              return const Text('Error');
+                            }
+
+                            final completionPercentage = snapshot.data!;
+                            return completionPercentage >= 0
+                                ? CompletionCircle(
+                                  percentage: completionPercentage,
+                                  size: 50,
+                                )
+                                : const Text('No Tasks');
+                          },
+                        ),
                   ),
                 ],
               ),
