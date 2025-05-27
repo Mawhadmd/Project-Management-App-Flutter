@@ -8,7 +8,7 @@ class ProjectService {
   // Get current user's name
   Future<String?> getUserName() async {
     try {
-      final user = await _db.auth.currentUser?.userMetadata?['full_name'];
+      final user = await _db.auth.currentUser?.userMetadata?['name'];
       if (user == null) return "User";
 
       return user;
@@ -20,9 +20,58 @@ class ProjectService {
   getUserImage() {
     return _db.auth.currentSession?.user.userMetadata?['avatar_url'];
   }
+
   Future<int> getProjectsCount() async {
-    return (await _db.from('Projects').select().eq('owner', _db.auth.currentUser?.id as String).count()).count;
+    return (await _db
+            .from('Projects')
+            .select()
+            .eq('owner', _db.auth.currentUser?.id as String)
+            .count())
+        .count;
   }
+
+  // Get completed projects
+  Future<List<Map<String, dynamic>>> getCompletedProjects() async {
+    try {
+      return await _db
+          .from('Projects')
+          .select()
+          .eq('owner', _db.auth.currentUser?.id as String)
+          .eq('status', 'completed');
+    } catch (e) {
+      print('Error getting completed projects: $e');
+      return [];
+    }
+  }
+
+  // Get in progress projects
+  Future<List<Map<String, dynamic>>> getInProgressProjects() async {
+    try {
+      return await _db
+          .from('Projects')
+          .select()
+          .eq('owner', _db.auth.currentUser?.id as String)
+          .eq('status', 'inProgress');
+    } catch (e) {
+      print('Error getting in progress projects: $e');
+      return [];
+    }
+  }
+
+  // Get other status projects (not completed or in progress)
+  Future<List<Map<String, dynamic>>> getOtherStatusProjects() async {
+    try {
+      return await _db
+          .from('Projects')
+          .select()
+          .eq('owner', _db.auth.currentUser?.id as String)
+          .not('status', 'in', ['completed', 'inProgress']);
+    } catch (e) {
+      print('Error getting other status projects: $e');
+      return [];
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getProjects(
     String? searchphrase,
     ProjectStatus? selectedstatus,
@@ -199,6 +248,6 @@ class ProjectService {
             .eq("projectID", int.parse(id))
             .eq('isDone', true)
             .count();
-    return total.count > 0? isDone.count / total.count: -1;
+    return total.count > 0 ? isDone.count / total.count : -1;
   }
 }

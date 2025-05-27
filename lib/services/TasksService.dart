@@ -23,8 +23,8 @@ class Tasksservice {
       'description': description,
       'projectID': projectId,
       'owner': user.id,
-      'start_date': startDate?.toIso8601String(),
-      'due_date': dueDate?.toIso8601String(),
+      'startDate': startDate?.toIso8601String(),
+      'dueDate': dueDate?.toIso8601String(),
       'priority': priority,
       'isDone': false,
     });
@@ -53,6 +53,20 @@ class Tasksservice {
               .eq('owner', _db.auth.currentUser?.id as String)
               .count();
       return response.count;
+    } catch (e) {
+      print('Error getting total tasks count: $e');
+      return -1;
+    }
+  }
+
+  Future getUserTasks() async {
+    try {
+      final response = await _db
+          .from('Tasks')
+          .select()
+          .eq('owner', _db.auth.currentUser?.id as String);
+
+      return response;
     } catch (e) {
       print('Error getting total tasks count: $e');
       return -1;

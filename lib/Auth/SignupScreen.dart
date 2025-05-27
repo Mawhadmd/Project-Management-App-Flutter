@@ -14,6 +14,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _nameController = TextEditingController(); // Add this line
   bool _isLoading = false;
 
   Future<void> _signUp() async {
@@ -27,14 +28,25 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
 
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter your name'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
 
     try {
-      await Authprovider().signUpWithEmail(
+      await Authprovider().signUpWithEmailAndName(
         _emailController.text.trim(),
         _passwordController.text.trim(),
+        _nameController.text.trim(),
       );
       if (mounted) {
         Navigator.pushReplacement(
@@ -81,6 +93,10 @@ class _SignupScreenState extends State<SignupScreen> {
         setState(() {
           _isLoading = false;
         });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
       }
     }
   }
@@ -116,13 +132,42 @@ class _SignupScreenState extends State<SignupScreen> {
                 Text(
                   'Sign up to get started',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.secondary.withAlpha((decimal_to_alpha_colors(0.7))),
+                    color: Theme.of(context).colorScheme.secondary.withAlpha(
+                      (decimal_to_alpha_colors(0.7)),
+                    ),
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
+                // Name Field (add this before Email Field)
+                TextFormField(
+                  controller: _nameController,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    prefixIcon: Icon(
+                      Icons.person_outline,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -139,9 +184,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -250,9 +294,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     Expanded(
                       child: Divider(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2))
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                     Padding(
@@ -260,17 +303,15 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Text(
                         'OR',
                         style: TextStyle(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.7)),
+                          color: Theme.of(context).colorScheme.secondary
+                              .withAlpha(decimal_to_alpha_colors(0.7)),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                   ],
@@ -282,9 +323,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     side: BorderSide(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                      color: Theme.of(context).colorScheme.secondary.withAlpha(
+                        decimal_to_alpha_colors(0.2),
+                      ),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -326,6 +367,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _nameController.dispose(); // Add this line
     super.dispose();
   }
 }

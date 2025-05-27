@@ -157,27 +157,42 @@ class _AddprojectformState extends State<Addprojectform> {
                   )
                   : Text("Please select a start date first")),
               const SizedBox(height: 16),
-              DropdownButton<ProjectStatus>(
-                value: status,
-                items:
-                    ProjectStatus.values
-                        .where(
-                          (e) =>
-                              e != ProjectStatus.cancelled &&
-                              e != ProjectStatus.completed,
-                        )
-                        .map(
-                          (e) => DropdownMenuItem<ProjectStatus>(
-                            value: e,
-                            child: Text(e.toString().split('.').last),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.secondary.withAlpha(100),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButton<ProjectStatus>(
+                  value: status,
+                  isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  underline: SizedBox(),
+                  items: ProjectStatus.values
+                      .where(
+                        (e) =>
+                            e != ProjectStatus.cancelled &&
+                            e != ProjectStatus.completed,
+                      )
+                      .map(
+                        (e) => DropdownMenuItem<ProjectStatus>(
+                          value: e,
+                          child: Text(
+                            e.toString().split('.').last,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                        )
-                        .toList(),
-                onChanged: (ProjectStatus? newValue) {
-                  setState(() {
-                    status = newValue;
-                  });
-                },
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (ProjectStatus? newValue) {
+                    setState(() {
+                      status = newValue;
+                    });
+                  },
+                ),
               ),
 
               const SizedBox(height: 16),

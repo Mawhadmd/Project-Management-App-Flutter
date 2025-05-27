@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart' show GoogleSignIn;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,12 +30,24 @@ class Authprovider {
       rethrow;
     }
   }
+  Future<AuthResponse> signUpWithEmailAndName(String email, String password, String name) async {
+    try {
+      final response = await supabase.auth.signUp(
+        email: email,
+        password: password,
+        data: {'name': name}, 
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   // Sign in with Google
   Future<AuthResponse> signInWithGoogle() async {
+    await dotenv.load();
     try {
-      const webClientId =
-          '670696650413-1k2ami577090mm9v6cl2n360f0css541.apps.googleusercontent.com';
+      var webClientId = dotenv.env['WEB_CLIENT_ID']!;
       final GoogleSignIn googleSignIn = GoogleSignIn(
         serverClientId: webClientId,
       );

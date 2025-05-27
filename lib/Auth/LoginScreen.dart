@@ -37,6 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _isLoading = false;
         });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
       }
     }
   }
@@ -47,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-     await Authprovider().signInWithEmail(
+      await Authprovider().signInWithEmail(
         _emailController.text,
         _passwordController.text,
       );
@@ -106,9 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   'Sign in to continue',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.7)),
+                    color: Theme.of(context).colorScheme.secondary.withAlpha(
+                      decimal_to_alpha_colors(0.7),
+                    ),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -129,9 +133,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -159,9 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -210,9 +212,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Expanded(
                       child: Divider(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                     Padding(
@@ -220,17 +221,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'OR',
                         style: TextStyle(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.7)),
+                          color: Theme.of(context).colorScheme.secondary
+                              .withAlpha(decimal_to_alpha_colors(0.7)),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                        color: Theme.of(context).colorScheme.secondary
+                            .withAlpha(decimal_to_alpha_colors(0.2)),
                       ),
                     ),
                   ],
@@ -242,9 +241,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     side: BorderSide(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.secondary.withAlpha(decimal_to_alpha_colors(0.2)),
+                      color: Theme.of(context).colorScheme.secondary.withAlpha(
+                        decimal_to_alpha_colors(0.2),
+                      ),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

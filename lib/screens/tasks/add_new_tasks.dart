@@ -140,53 +140,13 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                 maxLines: 3,
               ),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _priority,
-                decoration: const InputDecoration(
-                  labelText: 'Priority',
-                  border: OutlineInputBorder(),
-                ),
-                items:
-                    ['Low', 'Medium', 'High'].map((String value) {
-                      Color color;
-                      switch (value) {
-                        case 'Low':
-                          color = Colors.green;
-                          break;
-                        case 'Medium':
-                          color = Colors.orange;
-                          break;
-                        case 'High':
-                          color = Colors.red;
-                          break;
-                        default:
-                          color = Colors.grey;
-                      }
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 12,
-                              height: 12,
-                              decoration: BoxDecoration(
-                                color: color,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(value),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      _priority = newValue;
-                    });
-                  }
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildPriorityRadio('Low', Colors.green),
+                  _buildPriorityRadio('Medium', Colors.orange),
+                  _buildPriorityRadio('High', Colors.red),
+                ],
               ),
               const SizedBox(height: 16),
               CheckboxListTile(
@@ -249,6 +209,38 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildPriorityRadio(String priority, Color color) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _priority = priority;
+        });
+      },
+      child: Row(
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: color, width: 2),
+              color: _priority == priority ? color : Colors.transparent,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            priority,
+            style: TextStyle(
+              color: _priority == priority ? color : Colors.grey[600],
+              fontWeight:
+                  _priority == priority ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
       ),
     );
   }

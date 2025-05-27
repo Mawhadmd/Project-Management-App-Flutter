@@ -29,11 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _screens = [
-      const DashboardScreen(),
+       DashboardScreen(changeTab: changeBottomBarIndex),
       const Projectsscreen(),
       const TasksScreen(),
       const TeamsScreen(),
-      ProfileScreen(changeTab: changeBottomBarIndex),
+      ProfileScreen(),
     ];
   }
 
