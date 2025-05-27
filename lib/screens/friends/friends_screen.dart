@@ -1,15 +1,16 @@
 import 'package:finalmobileproject/services/UserService.dart';
+import 'package:finalmobileproject/widgets/friends/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class TeamsScreen extends StatefulWidget {
-  const TeamsScreen({super.key});
+class FriendsScreen extends StatefulWidget {
+  const FriendsScreen({super.key});
 
   @override
-  State<TeamsScreen> createState() => _TeamsScreenState();
+  State<FriendsScreen> createState() => _FriendsScreenState();
 }
 
-class _TeamsScreenState extends State<TeamsScreen> {
+class _FriendsScreenState extends State<FriendsScreen> {
   String searchQuery = '';
   late Future<List<User>> usersFuture;
   final currentUser = Supabase.instance.client.auth.currentUser;
@@ -52,42 +53,89 @@ class _TeamsScreenState extends State<TeamsScreen> {
                       itemCount: requests.length,
                       itemBuilder: (context, index) {
                         final req = requests[index];
-                        return ListTile(
-                          title: Text('Request from: ${req['user_id']}'),
-                          subtitle: Text('Status: ${req['status']}'),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                ),
-                                onPressed: () async {
-                                  await Userservice().respondToFriendRequest(
-                                    req['id'],
-                                    'accepted',
-                                  );
-                                  Navigator.pop(context);
-                                  setState(() {});
-                                },
+                        return FutureBuilder(
+                          future: Userservice().getuserbyid(req['user_id']),
+                          builder: (context, snapshot) {
+                            final username = snapshot.data ?? 'Unknown';
+                            return ListTile(
+                              title: Text('Request from: $username'),
+                              subtitle: Text('Status: ${req['status']}'),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                    ),
+                                    onPressed: () async {
+                                      await Userservice()
+                                          .respondToFriendRequest(
+                                            req['id'],
+                                            'accepted',
+                                          );
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    ),
+                                    onPressed: () async {
+                                      await Userservice()
+                                          .respondToFriendRequest(
+                                            req['id'],
+                                            'rejected',
+                                          );
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
-                                onPressed: () async {
-                                  await Userservice().respondToFriendRequest(
-                                    req['id'],
-                                    'rejected',
-                                  );
-                                  Navigator.pop(context);
-                                  setState(() {});
-                                },
-                              ),
-                            ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+          ),
+    );
+  }
+
+  void showAllFriends() async {
+    final userId = currentUser?.id;
+    if (userId == null) return;
+    final friends = await Userservice().getAllFriends(userId);
+    showModalBottomSheet(
+      context: context,
+      builder:
+          (context) => SizedBox(
+            height: 400,
+            child:
+                friends.isEmpty
+                    ? const Center(child: Text('No friends yet.'))
+                    : ListView.builder(
+                      itemCount: friends.length,
+                      itemBuilder: (context, index) {
+                        final friend = friends[index];
+                        return FutureBuilder(
+                          future: Userservice().getuserbyid(
+                            friend['friend_id'] == userId
+                                ? friend['user_id']
+                                : friend['friend_id'],
                           ),
+                          builder: (context, snapshot) {
+                            final username = snapshot.data ?? 'Unknown';
+                            return ListTile(
+                              leading: const Icon(Icons.person),
+                              title: Text(username.toString()),
+                              subtitle: Text(
+                                'Friend since: ${friend['created_at']?.toString().substring(0, 10) ?? ''}',
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -102,8 +150,13 @@ class _TeamsScreenState extends State<TeamsScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Teams'),
+          title: const Text('Friends'),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.people),
+              tooltip: 'All Friends',
+              onPressed: showAllFriends,
+            ),
             IconButton(
               icon: const Icon(Icons.mail),
               tooltip: 'Friend Requests',
@@ -200,41 +253,6 @@ class _TeamsScreenState extends State<TeamsScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class UserTile extends StatelessWidget {
-  final User user;
-  final VoidCallback? onAddFriend;
-  final String buttonLabel;
-
-  const UserTile({
-    super.key,
-    required this.user,
-    required this.onAddFriend,
-    this.buttonLabel = 'Add Friend',
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final avatarUrl = user.userMetadata?['avatar_url'];
-    final name = user.userMetadata?['name'] ?? 'No Name';
-
-    return ListTile(
-      leading:
-          avatarUrl != null
-              ? CircleAvatar(backgroundImage: NetworkImage(avatarUrl))
-              : const CircleAvatar(child: Icon(Icons.person)),
-      title: Text(name),
-      trailing: ElevatedButton.icon(
-        icon: const Icon(Icons.person_add),
-        label: Text(buttonLabel),
-        onPressed: onAddFriend,
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
     );

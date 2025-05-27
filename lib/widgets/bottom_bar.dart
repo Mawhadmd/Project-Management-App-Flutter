@@ -55,7 +55,7 @@ class BottomBar extends StatelessWidget {
             BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
             BottomNavigationBarItem(
               icon: Icon(Icons.people_outline),
-              label: 'Teams',
+              label: 'Friends',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],

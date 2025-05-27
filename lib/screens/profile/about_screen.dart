@@ -56,7 +56,7 @@ class AboutScreen extends StatelessWidget {
           _buildAboutSection(
             context,
             'Features',
-            '• Task Management\n• Project Organization\n• Real-time Updates\n• Team Collaboration',
+            '• Task Management\n• Project Organization\n• Team Collaboration',
           ),
           _buildAboutSection(
             context,
@@ -65,7 +65,7 @@ class AboutScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            '© 2024 Task Manager. All rights reserved.',
+            '© 2025 Task Manager. All rights reserved.',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant,

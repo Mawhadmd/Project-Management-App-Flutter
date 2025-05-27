@@ -184,7 +184,9 @@ class DashboardScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(bottom: 12),
                                 child: _buildTaskItem(
                                   task['title'] as String,
-                                  task['description'] as String,
+                                  task['description'] == ''
+                                      ? 'No description provided'
+                                      : task['description'] as String,
                                   _formatDate(task['dueDate'] as String?),
                                   color,
                                 ),
@@ -249,9 +251,9 @@ class DashboardScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha(decimal_to_alpha_colors(0.4)),
             spreadRadius: 1,
-            blurRadius: 10,
+            blurRadius: 1,
             offset: const Offset(0, 1),
           ),
         ],

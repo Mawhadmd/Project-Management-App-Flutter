@@ -1,9 +1,17 @@
-
 // Privacy Screen
 import 'package:flutter/material.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
+
+  void _comingSoon(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Feature coming soon!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +25,13 @@ class PrivacyScreen extends StatelessWidget {
               title: const Text('Public Profile'),
               subtitle: const Text('Allow others to view your profile'),
               value: false,
-              onChanged: (value) {
-                // Handle public profile toggle
-              },
+              onChanged: (_) => _comingSoon(context),
             ),
             SwitchListTile(
               title: const Text('Show Activity Status'),
               subtitle: const Text('Show when you are active'),
               value: true,
-              onChanged: (value) {
-                // Handle activity status toggle
-              },
+              onChanged: (_) => _comingSoon(context),
             ),
           ]),
           const SizedBox(height: 16),
@@ -35,16 +39,12 @@ class PrivacyScreen extends StatelessWidget {
             ListTile(
               title: const Text('Download My Data'),
               trailing: const Icon(Icons.download),
-              onTap: () {
-                // Handle download data
-              },
+              onTap: () => _comingSoon(context),
             ),
             ListTile(
               title: const Text('Delete Account'),
               trailing: const Icon(Icons.delete, color: Colors.red),
-              onTap: () {
-                // Handle delete account
-              },
+              onTap: () => _comingSoon(context),
             ),
           ]),
         ],
