@@ -1,16 +1,32 @@
-# finalmobileproject
+# Project Management App
 
-A new Flutter project.
+This was the final mobile project for my mobile course at university. I used flutter, supabase to create it and it is simple. 
 
-## Getting Started
+## Main Features
 
-This project is a starting point for a Flutter application.
+- Add/remove/edit projects
+- Add/remove/edit subtasks for the project
+- Send a Friend request and add friends
+- Assign friends to each subtask (Was planned)
+- That's it, I know it's easy AF compared to what I built myself
 
-A few resources to get you started if this is your first Flutter project:
+#How to run?
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1- Clone
+```
+git clone https://github.com/Mawhadmd/Project-Management-App-Flutter
+cd Project-Management-App-Flutter
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2- Set up Supabase on your side (There is no Docker)
+3- Add .env file with Supabase SUPABASE_ANON_KEY, SUPABASE_URL, and WEB_CLIENT_ID (Google)
+4- install dependencies 
+```
+pip install
+```
+5- Run 
+```
+flutter run
+```
+
+
