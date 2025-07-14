@@ -12,19 +12,19 @@ This was the final mobile project for my mobile course at university. I used flu
 
 # How to run?
 
-1- Clone
+1. Clone
 ```
 git clone https://github.com/Mawhadmd/Project-Management-App-Flutter
 cd Project-Management-App-Flutter
 ```
 
-2- Set up Supabase on your side (There is no Docker)
-3- Add .env file with Supabase SUPABASE_ANON_KEY, SUPABASE_URL, and WEB_CLIENT_ID (Google)
-4- install dependencies 
+2. Set up Supabase on your side (There is no Docker).
+3. Add .env file with Supabase SUPABASE_ANON_KEY, SUPABASE_URL, and WEB_CLIENT_ID (Google)
+4. install dependencies 
 ```
 pip install
 ```
-5- Run 
+5. Run 
 ```
 flutter run
 ```
