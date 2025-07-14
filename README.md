@@ -10,7 +10,7 @@ This was the final mobile project for my mobile course at university. I used flu
 - Assign friends to each subtask (Was planned)
 - That's it, I know it's easy AF compared to what I built myself
 
-#How to run?
+# How to run?
 
 1- Clone
 ```
