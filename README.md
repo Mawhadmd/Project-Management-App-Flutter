@@ -8,7 +8,7 @@ This was the final mobile project for my mobile course at university. I used flu
 - Add/remove/edit subtasks for the project
 - Send a Friend request and add friends
 - Assign friends to each subtask (Was planned)
-- That's it, I know it's easy AF compared to what I built myself
+
 
 # How to run?
 
